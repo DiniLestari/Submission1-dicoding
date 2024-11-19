@@ -127,58 +127,68 @@ Untuk memahami data _diabetic desise_ dilakukan visualisasi menggunakan _bar cha
 
 1. _Univariate Analysis_ terhadap Diabetic Disease
 
-![image](https://github.com/user-attachments/assets/aff99bfb-43d5-404a-8782-a9d6676ff1c9)
-
-
-![ua-countplot diabetes](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/1.%20countplot%20diabetes.png)	
+![1  countplot diabetes](https://github.com/user-attachments/assets/5b64ee66-f6d2-4e5d-9ef9-c47ae4464cf0)
 
 Perlu diketahui bahwa variabel target dari predictive analysis yang dilakukan adalah diabetes.
 
 Dari plot yang dibuat, dapat diketahui bahwa data lebih banyak menunjukkan kondisi diabetes [1] dibanding kondisi normal [0].
 
 2. _Univariate Analysis_ terhadap gender
-![ua-countplot gender](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/2.%20countplot%20gender.png)	
+
+![2  countplot gender](https://github.com/user-attachments/assets/f5d8e682-ed9c-478c-8117-32dfb836e0f7)
+
 
 Menampilkan jumlah frekuensi data gender (Male and Female). Datap diketahu bahwa distribusi pasien wanita lebih banyak dari pada pasian pria.
 
 3. _Univariate Analysis_ terhadap _Smoking History_
-![ua-smoking history](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/3.%20distribusi%20rokok.png)	
+
+![3  distribusi rokok](https://github.com/user-attachments/assets/4ca476de-86e1-40eb-bce8-5ce15e87cc67)
 
 Countplot Menampilkan jumlah frekuensi data smoking history. Dapat diketahui dari grafik bahwa data 'No Info' memiliki jumlah paing banyak. Jumlah paling banyak ke dua diduduki olehh pasien yang tdak pernah merokok dengan label never.
 
 4. _Univariate Analysis_ terhadap _Hypertension_
-![ua-hypertension](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/4.%20hypertension.png)	
+
+![ua-hypertension](https://github.com/user-attachments/assets/788efa11-0279-475d-adf9-277ab87cceda)
+
 
 Grafik menampilkan distribusi pasien dengan riwayat tekanan darah tinggi (_hypertension_). Didapatkan 92.2% pasien tidak menderita tekanan darah tinggi.
 
 5. _Univariate Analysis_ terhadap sakit jantung
-![ua-heart disease](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/ua-heart%20disease.png)	
+
+![ua-heart disease](https://github.com/user-attachments/assets/cadf284a-98e4-4f25-8bf8-d2bd6369e2fd)
 
 Grafik menampilkan distribusi pasien dengan riwayat sakit jantung (heart disease). Didapatkan 95.9% pasien tidak menderita sakit jantung.
 
 #### *Bivariate Analysis - Categorical Feature*
 1. Diabetes vs gender
-![ba-diabetes vs gender](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/ba-diabetes%20vs%20gender.png)	
+
+![ba-diabetes vs gender](https://github.com/user-attachments/assets/38355d7a-97a3-4bc8-9e46-a2b1b706aa7f)
+
 
 Mengecek hubungan antara penderita diabetes dan gender. didapatkan 4035 penderita diabetes laki- laki, yakni 11.2% dari total pasien laki-laki. Didapatkan pula 4447 penderita diabetes wanita, yakni 8.6% dari total pasien wanita.
 
 2. Diabetes vs smoking history
-![ba-diabetes vs smoking history](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/ba-diabetes%20vs%20smoking%20history.png)	
+
+![ba-diabetes vs smoking history](https://github.com/user-attachments/assets/d8fd1ff9-3033-4814-87c4-e4c8829dc471)
+
 
 Pada fitur Smoking History, penderita diabetes terbesar dengan kategori selain No Info didapatkan oleh mantan perokok former dengan 1590 penderita yakni 17% dari seluruh former smoker.
 
 3. Diabetes vs hypertension
-![ba-diabetes vs hypertension](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/7.bi-hyp.png)	
+
+![ba-diabetes vs hypertension](https://github.com/user-attachments/assets/e9ec05ec-034c-45c2-bfe9-61f10eb9c488)
+
 
 Mengecek hubungan diabetes dengan penyakit tekanan darah tinggi. Didapatkan 7.7% penderita diabetes non Hypertensi dan 38.8% penderita diabetes dan hypertensi.
 
 4. Diabetes vs sakit jantung
-![ba-diabetes vs heart disease](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/ba-diabetes%20vs%20heart%20disease.png)	
+
+![ba-diabetes vs heart disease](https://github.com/user-attachments/assets/c981bfd6-397f-41e4-9c61-83d7d3df0ada)
 
 Pada fitur heart_disease, rerata pasien yang memiliki penyakit jantung dan menderita diabetes berjumlah 1267 pasien, yakni 38% dari pasien penderita penyakit Jantung.
 
 
-Dengan mengamati rata-rata harga relatif terhadap fitur categorical di atas, didapatkan insight sebagai berikut:
+**Dengan mengamati rata-rata harga relatif terhadap fitur categorical di atas, didapatkan insight sebagai berikut:**
 
 1. Diabetes [0] menunjukkan bahwa pasien Normal Diabetes [1] menunjukkan bahwa pasien memiliki penyakit jantung
 
@@ -194,33 +204,37 @@ Dengan mengamati rata-rata harga relatif terhadap fitur categorical di atas, did
 #### *Univariate Analysis - Numerical Feature*
 Melihat plot histogram dan box plot fitur-fitu numerikal seperti `Age`, `BMI`, `HbA1c level`, `Blood Glucose Level`. 
 
-![ba-Numerical Features](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/ua-numerical.png)	
+![ua-numerical](https://github.com/user-attachments/assets/c85171f7-9f22-4755-97c6-f967e45ec343)
 
 
 Disajikan pula dalam bentuk pair plot fitur-fitur numerik.
 
-![ba-Pair plot Numerical Features](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/Pair%20Plot%20of%20Numeric%20Features%20by%20Diabetes%20Classification.png)	
+![Pair Plot of Numeric Features by Diabetes Classification](https://github.com/user-attachments/assets/e6000f42-4934-4ef0-b943-b87019ad7c6d)
+
 
 #### *Bivariate Analysis - Numerical Feature*
 1. Diabetes vs BMI
 Didapatkan bahwa rerata dan median data BMI penderita diabetes lebih tinggi dari pada bukan penderita diabetes.
 
-![ba-diabetes vs BMI](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/ba-diabetes%20vs%20bmi.png)	
+![ba-diabetes vs bmi](https://github.com/user-attachments/assets/3b14e4cd-c4d0-42a0-85c2-aeee617fe957)
 
 2. Diabetes vs level HbA1c
 Didapatkan bahwa rerata dan median HbA1c penderita diabetes lebih tinggi dari pada bukan penderita diabetes.
 
-![ba-diabetes vs level HbA1c](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/ba-diabetes%20vs%20HbA1c.png)	
+![ba-diabetes vs HbA1c](https://github.com/user-attachments/assets/ba5d6e94-6d2e-4fd4-80ab-2b59fc0aaacd)
+
 
 3. Diabetes vs age
 Didapatkan bahwa rerata dan median HbA1c penderita diabetes lebih tinggi dari pada bukan penderita diabetes. Didapatkan rata-rata penderita diabetes lebih tinggi dari bukan penderita, yakni 60 tahun, sedangkan bukan penderita diabetes adalah 40 tahun.
 
-![ba-diabetes vs age](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/ba-diabetes%20vs%20age.png)
+![ba-diabetes vs age](https://github.com/user-attachments/assets/187c040e-9864-4a9e-bafb-fdcacf0fdaa7)
+
 
 4. Diabetes vs Blood Glucose Level
 Didapatkan bahwa rerata dan median level glukosa dalam darah penderita diabetes lebih tinggi dari pada bukan penderita diabetes yakni 194, sedangkan bukan penderita diabetes adalah 132.
 
-![ba-diabetes vs blood glucose](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/ba-diabetes%20vs%20blood%20glucose.png)
+![ba-diabetes vs blood glucose](https://github.com/user-attachments/assets/b34f8dca-3c8c-483a-ad06-b6bf15b04b4d)
+
 
 #### *Multivariate Analysis - Categorical and Numerical Feature*
 
@@ -229,18 +243,21 @@ Didapatkan bahwa rerata dan median level glukosa dalam darah penderita diabetes 
 Di dapatkan pederita diabetes cenderung merupakan Wanita yang memiliki nilai BMI yang tinggi.
 
 
-![mu-BMI vs diabetes vs gender](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/ma-diabetes%20vs%20bmi.png)
+![ma-diabetes vs bmi (1)](https://github.com/user-attachments/assets/1b902685-f40f-42b6-a7d6-b5a043dd7a51)
+
 
 Di dapatkan pederita diabetes cenderung merupakan Wanita yang memiliki nilai BMI yang tinggi.
 
 2. Hubungan fitur gender, age dan diabetes
-![mu-BMI vs diabetes vs age](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/ma-diabetes%20vs%20age%20vs%20gender.png)
 
-Diadapatkan penderita diabetes cenderung merupakan Wanita yang rata-rata berusia 60 tahun.
+![ma-diabetes vs age vs gender](https://github.com/user-attachments/assets/08790b59-1361-422d-a1fc-1136de0e1a99)
+
+Didapatkan penderita diabetes cenderung merupakan Wanita yang rata-rata berusia 60 tahun.
 
 Perlu diketahui fitur mana saja yang memiliki hubungan paling kuat dengan penyakit diabetes. Hal ini dapat diketahui dengan menggunaka fungsi `corr`.
 
-![correlation](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/Correlation%20Matrix%20untuk%20Fitur%20Numerical.png)
+![Correlation Matrix untuk Fitur Numerical](https://github.com/user-attachments/assets/a469a827-f410-4b07-b30d-a992fb38abd1)
+
 
 Berdasarkan data awal (sebelum dilakukannya training model), fitur-fitur dengan korelasi positif terhadap diabetes adalah yang memiliki nilai positif paling besar. Artinya fitur tersebut lebih mungkin memberikan kontribusi signifikan dalam membedakan kasus diabetes dan non-diabetes. Dalam hal ini, fitur yang paling berpotensi berguna adalah:
 
@@ -299,11 +316,12 @@ sehingga menghasilkan :
 
 4. Klasifikasi fitur
 Fitur-fitur pada data dapat diklasifikasikan menjadi 2 kategori; yaitu fitur kategorikal dan fitur numerikal. 
-	```
-	categorical_feature = ['gender', 'smoking_history', 'hypertension', 'heart_disease']
-	numerical_feature = ['age', 'bmi', 'HbA1c_level', 'blood_glucose_level', 'diabetes']
 
-5. Menangani Outlier: Melakukan pengecekan apakah data `diabetic_disease` memiliki data outlier. Dalam menangani _outlier_, digunakan metode IQR. Ditemukan _outlier_ pada data `diabetic_disease`, hal ini ditemukan dengan melakukan visualisasi dengan `boxplot`. Untuk mengidentifikasi _outlier_ yang ada, maka digunakan metode IQR.
+		categorical_feature = ['gender', 'smoking_history', 'hypertension', 'heart_disease']
+		numerical_feature = ['age', 'bmi', 'HbA1c_level', 'blood_glucose_level', 'diabetes']
+
+5. Menangani Outlier: Melakukan pengecekan apakah data `diabetic_disease` memiliki data outlier. Dalam menangani _outlier_, digunakan metode IQR. Ditemukan _outlier_ pada data `diabetic_disease`, hal ini ditemukan dengan melakukan visualisasi dengan `boxplot`. Untuk mengidentifikasi _outlier_ yang ada, maka digunakan metode IQR. Sebagaimana kita telah lihat, seluruh fitur memiliki outlier yang cukup banyak. Mengingat data ini adalah data medis yang dapat memberikan wawasan penting mengenai kondisi langka, variasi individual pasien, dan potensi risiko kesehatan, data outlier tidak dihapuskan.
+
 
 | Feature             | Count  |
 |---------------------|--------|
@@ -315,9 +333,8 @@ Fitur-fitur pada data dapat diklasifikasikan menjadi 2 kategori; yaitu fitur kat
 | Blood Glucose Level | 2031   |
 | Diabetes            | 8482   |
 
-![outlier](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/ba-outliers%20age%2Cbmi%2CHbAic%2Cbloodglucose.png)
+![ba-outliers age,bmi,HbAic,bloodglucose](https://github.com/user-attachments/assets/2e864465-def0-4e86-82c0-6b5bf565e72b)
 
-Sebagaimana kita telah lihat, seluruh fitur memiliki outlier yang cukup banyak. Mengingat data ini adalah data medis yang dapat memberikan wawasan penting mengenai kondisi langka, variasi individual pasien, dan potensi risiko kesehatan, data outlier tidak dihapuskan.
 
 6. Melakukan re-grouping Smoking History
 Data smoki1ng history yang dapat memberikan informasi bagus untuk mengetahui korelasinya dengan diabetes, memiliki terlalu banyak data `No Info`. Untuk itu dilakukan regrouping dengan menyatukan `No Info` dengan `never`, dan ketegori `ever`, `former`, dan `not curret` menjadi `past_smoker`.
@@ -347,13 +364,12 @@ X didefinisikan sebagai semua kolom kecuali kolom diabetes, dan y ditetapkan seb
 		X = data.drop('diabetes', axis=1)  # Assuming 'diabetes' is the target column
 		y = data['diabetes']
 
-13.  Standarisasi dan Column Transformer: membantu membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma. ColumnTransformer memungkinkan kita melakukan pra-pemrosesan yang berbeda untuk fitur numerik dan fitur kategorikal:
+13.  Standarisasi dan Column Transformer: membantu membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma. ColumnTransformer memungkinkan kita melakukan pra-pemrosesan yang berbeda untuk fitur numerik dan fitur kategorikal: 
+- Fitur Numerik: `StandardScaler()` menormalisasi fitur-fitur age, bmi, HbA1c_level, blood_glucose_level, hypertension, dan heart_disease agar memiliki rata-rata 0 dan standar deviasi 1, yang dapat meningkatkan kinerja model, terutama untuk model yang sensitif terhadap skala fitur.
 
-Fitur Numerik: `StandardScaler()` menormalisasi fitur-fitur age, bmi, HbA1c_level, blood_glucose_level, hypertension, dan heart_disease agar memiliki rata-rata 0 dan standar deviasi 1, yang dapat meningkatkan kinerja model, terutama untuk model yang sensitif terhadap skala fitur.
+- Fitur Kategorikal: `OneHotEncoder()` mengubah kolom kategorikal seperti gender dan smoking_history menjadi kolom indikator biner. handle_unknown='ignore' memastikan bahwa kategori baru atau tidak dikenal akan diabaikan.
 
-Fitur Kategorikal: `OneHotEncoder()` mengubah kolom kategorikal seperti gender dan smoking_history menjadi kolom indikator biner. handle_unknown='ignore' memastikan bahwa kategori baru atau tidak dikenal akan diabaikan.
-
-		'''preprocessor = ColumnTransformer( transformers=[
+		preprocessor = ColumnTransformer( transformers=[
         ('num', StandardScaler(), ['age', 'bmi', 'HbA1c_level', 'blood_glucose_level', 'hypertension', 'heart_disease']),
         ('cat', OneHotEncoder(sparse_output=False, handle_unknown='ignore'),
          [col for col in X.columns if col.startswith('gender') or col.startswith('smoking_history')])])
@@ -362,13 +378,13 @@ Fitur Kategorikal: `OneHotEncoder()` mengubah kolom kategorikal seperti gender d
 
 ## Modeling
 Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Proses ini dilakukan dengan menggunakan empat Algoritma. 
-
+1. _Models_
 - **_K-NN_**
-Algoritma _K-Nearest Neighbor_ (K-NN) adalah algoritma _machine learning_ yang sederhana dan mudah diterapkan, yang mana umumnya digunakan untuk menyelesaikan masalah klasifikasi dan regresi. Algoritma ini termasuk dalam _supervised learning_. Tujuan dari algortima K-NN adalah untuk mengidentifikasi _nearest neighbor_ dari titik yang diberikan, sehingga dapat menetapkan label prediksi ke titik tersebut.
+   Algoritma _K-Nearest Neighbor_ (K-NN) adalah algoritma _machine learning_ yang sederhana dan mudah diterapkan, yang mana umumnya digunakan untuk menyelesaikan masalah klasifikasi dan regresi. Algoritma ini termasuk dalam _supervised learning_. Tujuan dari algortima K-NN adalah untuk mengidentifikasi _nearest neighbor_ dari titik yang diberikan, sehingga dapat menetapkan label prediksi ke titik tersebut.
 
   		'K-Nearest Neighbors': KNeighborsClassifier(n_neighbors=5)
 
-`n_neighbors=5` : Parameter ini menentukan jumlah _nearest neighbor_ yang akan dipertimbangkan saat membuat prediksi. Dalam hal ini, model akan mempertimbangkan 5 tetangga terdekat untuk mengklasifikasikan suatu titik data.
+	- `n_neighbors=5` : Parameter ini menentukan jumlah _nearest neighbor_ yang akan dipertimbangkan saat membuat prediksi. Dalam hal ini, model akan mempertimbangkan 5 tetangga terdekat untuk mengklasifikasikan suatu titik data.
 
 
 - **_Random Forest_**
@@ -376,9 +392,8 @@ _Random forest_ adalah kombinasi dari masing – masing _tree_ atau pohon, yang 
 
 		'Random Forest': RandomForestClassifier(n_estimators=50, n_jobs=-1)
 
-`n_estimators=50`: Parameter ini menentukan jumlah pohon dalam hutan. Dalam hal ini, hutan terdiri dari 50 pohon. Menggunakan jumlah pohon yang lebih sedikit dapat membuat model lebih sederhana dan lebih cepat dalam pelatihan, meskipun akurasi mungkin sedikit menurun.
-
-`n_jobs=-1`: Parameter ini menentukan jumlah inti CPU yang digunakan selama pelatihan. Dengan menetapkan nilai -1, maka semua inti yang tersedia akan digunakan, yang dapat mempercepat pelatihan, terutama dengan dataset yang besar.
+   	- `n_estimators=50`: Parameter ini menentukan jumlah pohon dalam hutan. Dalam hal ini, hutan terdiri dari 50 pohon. Menggunakan jumlah pohon yang lebih sedikit dapat membuat model lebih sederhana dan lebih cepat dalam pelatihan, meskipun akurasi mungkin sedikit menurun.
+	- `n_jobs=-1`: Parameter ini menentukan jumlah inti CPU yang digunakan selama pelatihan. Dengan menetapkan nilai -1, maka semua inti yang tersedia akan digunakan, yang dapat mempercepat pelatihan, terutama dengan dataset yang besar.
 
 
 - **_Logistic Regression_**
@@ -386,14 +401,14 @@ _Random forest_ adalah kombinasi dari masing – masing _tree_ atau pohon, yang 
 
 		'Logistic Regression': LogisticRegression(max_iter=500)
 
-`max_iter=500`: Parameter ini menentukan jumlah iterasi maksimum yang dapat digunakan solver untuk menemukan koefisien logistik yang optimal. Jika solver tidak dapat mencapai konvergensi dalam 500 iterasi, maka pelatihan akan dihentikan. Meningkatkan nilai `max_iter` bisa membantu ketika data yang digunakan besar atau modelnya kompleks.
+	- `max_iter=500`: Parameter ini menentukan jumlah iterasi maksimum yang dapat digunakan solver untuk menemukan koefisien logistik yang optimal. Jika solver tidak dapat mencapai konvergensi dalam 500 iterasi, maka pelatihan akan dihentikan. Meningkatkan nilai `max_iter` bisa membantu ketika data yang digunakan besar atau modelnya kompleks.
 
 
  - **_SVM_** adalah algoritma _Supervised Machine Learning_ yang digunakan untuk tugas klasifikasi dan regresi. Algoritma ini bekerja dengan mencari hyperplane optimal yang memisahkan kelas yang berbeda dalam ruang berdimensi tinggi. SVM juga dapat menggunakan kernel untuk memproyeksikan data ke dimensi yang lebih tinggi untuk klasifikasi non-linier.
 
 		'Support Vector Machine': SVC(kernel='linear')
 
-`kernel='linear'`: Parameter ini menentukan jenis kernel yang digunakan. Linear kernel berarti SVM akan menggunakan hyperplane linier untuk memisahkan kelas-kelas data. Ini lebih cepat secara komputasi dibandingkan dengan kernel non-linier seperti RBF (Radial Basis Function), dan berguna ketika data hampir bisa dipisahkan secara linier.
+	- `kernel='linear'`: Parameter ini menentukan jenis kernel yang digunakan. Linear kernel berarti SVM akan menggunakan hyperplane linier untuk memisahkan kelas-kelas data. Ini lebih cepat secara komputasi dibandingkan dengan kernel non-linier seperti RBF (Radial Basis Function), dan berguna ketika data hampir bisa dipisahkan secara linier.
 
 
 2. _Hypermarameter Tuning_
@@ -449,24 +464,25 @@ Hal ini berarti :
 ## Evaluation
 1. Evaluasi metrik yang digunakan untuk mengukur kinerja model adalah metrik mse (Mean Squared Error). Pemilihan matrik ini disebabkan karena kasus atau domain proyek yang dipilih adalah klasifikasi. Matrik MSE, pada dasarnya akan mengukur kuadrat rerata error dari prediksi yang dilakukan. MSE juga akan menghitung selisih kuadrat antara prediksi dan target, yang kemudian melakukan perhitungan rata-rata terhadap nilai-nilai tersebut.
    
-Rumus perhitungan matrik MSE: 
+	Rumus perhitungan matrik MSE: 
 
-![alt](https://www.gstatic.com/education/formulas2/472522532/en/mean_squared_error.svg)
+	![alt](https://www.gstatic.com/education/formulas2/472522532/en/mean_squared_error.svg)
 
-ket:
+	ket:
 
-$\mathrm{MSE}$	=	mean squared error
+	$\mathrm{MSE}$	=	mean squared error
 
-${n}$	=	_number of data points_
+	${n}$	=	_number of data points_
 
-$Y_{i}$	=	_observed values_ atau _ground truth_ dari nilai sebenarnya, dalam kasus ini nilai yang digunakan adalah nilai dari variabel `HeartDisease`
+	$Y_{i}$	=	_observed values_ atau _ground truth_ dari nilai sebenarnya, dalam kasus ini nilai yang digunakan adalah nilai dari variabel `HeartDisease`
 
-$\hat{Y}_{i}$	=	_predicted values_ atau _estimated target values_, dalam kasus ini nilai yang digunakan adalah nilai prediksi model terhadap variabel `HeartDisease`
+	$\hat{Y}_{i}$	=	_predicted values_ atau _estimated target values_, dalam kasus ini nilai yang digunakan adalah nilai prediksi model terhadap variabel `HeartDisease`
 
 
-Semakin tinggi nilai yang diperoleh MSE, semakin buruk juga modelnya. Nilai MSE tidak pernah negatif, tetapi akan menjadi NOL untuk model yang sempurna. Dari hasil training didapatkan bahwa Model Random Forest adalah model yang menghasilkan nilai MSE yang paling kecil. 
+	Semakin tinggi nilai yang diperoleh MSE, semakin buruk juga modelnya. Nilai MSE tidak pernah negatif, tetapi akan menjadi NOL untuk model yang sempurna. Dari hasil training didapatkan bahwa Model Random Forest adalah model yang menghasilkan nilai MSE yang paling kecil. 
 
-![mse](https://github.com/DiniLestari/Submission1-dicoding/blob/646d612ff779f34e72aad31b395d49083afdd34b/MSE%20comparison.png)
+	![MSE comparison](https://github.com/user-attachments/assets/9817fc88-fc52-4f94-887f-88a72d4338a1)
+
 
 2. Dilakukan juga analysis dengan menggunakan `confusion matrix` dan `Classification Report` . `Confusion Matrix` dilakukan untuk mengetahui informasi tentang jumlah prediksi yang benar dan salah untuk setiap kelas yang ada. Sementara `Classification Report` dibutuhkan untuk memahami kinerja model terutama ketika data tidak seimbang seperti yang yang sedang kita gunakan. 
 
@@ -478,8 +494,8 @@ Semakin tinggi nilai yang diperoleh MSE, semakin buruk juga modelnya. Nilai MSE 
 | **Macro avg**     | 0.80      | 0.88   | 0.84     | 19226   |
 | **Weighted avg**  | 0.95      | 0.94   | 0.94     | 19226   |
 
+![Confusion Matrix for Random forest](https://github.com/user-attachments/assets/2f6aee59-3c08-47c1-8c4c-5bc580b1c488)
 
-![confusion_matrix](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/Confusion%20Matrix%20for%20Random%20forest.png)
 
 A | Kelas 0 (Non-diabetes): Model memiliki presisi yang tinggi (0,98) untuk kelas 0, yang berarti bahwa di antara semua instance yang diprediksi sebagai non-diabetes oleh model, 98% benar-benar non-diabetes. Recall untuk kelas 0 juga tinggi (0,96). Ini berarti model kita berhasil mengidentifikasi 96% dari semua kasus non-diabetes yang sebenarnya dalam dataset.
 
@@ -489,9 +505,11 @@ Perbedaan kinerja antara kelas-kelas ini kemungkinan disebabkan oleh ketidakseim
 
 Namun, recall yang lebih tinggi untuk kelas 1 (Diabetes) menjanjikan. Ini adalah aspek penting untuk model kesehatan, karena melewatkan kasus positif yang sebenarnya (_false negatives_) dapat memiliki implikasi serius.
 
-3. Dibutuhkan juga informasi `Feature Importance` baru yang didapatkan setelah perhitungan dengan model. 
+3. Dibutuhkan juga informasi `Feature Importance` baru yang didapatkan setelah perhitungan dengan model.
+   
+![Feature Importance](https://github.com/user-attachments/assets/17ae83b2-557e-498f-befa-f2e633d6bb2e)
 
-![Eval](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/Feature%20Importance.png)
+
 
 * HbA1c_level adalah fitur yang paling penting dengan nilai penting sebesar 0,44. HbA1c adalah ukuran rata-rata kadar glukosa darah selama 2 hingga 3 bulan terakhir, sehingga tidak mengherankan jika ini merupakan prediktor signifikan untuk diabetes.
 
