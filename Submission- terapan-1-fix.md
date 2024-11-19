@@ -426,8 +426,7 @@ Perhitungan diawali dengan :
    	- Menggunakan pipeline (`clf`).
     	- Melakukan pencarian berdasarkan grid parameter spesifik model (param_grids[model_name]).
     	- Melakukan validasi silang dengan 5 lipatan (cv=5).
-    	- Menggunakan skor ROC-AUC untuk evaluasi (scoring='roc_auc').
-
+    	
 - Melatih Grid Search
 Data pelatihan (X_train, y_train) digunakan untuk melatih model sekaligus menyesuaikan _hyperparameter_.
 
@@ -462,29 +461,45 @@ Hal ini berarti :
 4. `n_estimators` sebesar 50: Ini adalah jumlah decision trees. Algoritma Random Forest bekerja dengan merata-rata prediksi dari banyak decision trees untuk menghasilkan prediksi akhir, yang membantu mengurangi overfitting dan variansi.
 
 ## Evaluation
-1. Evaluasi metrik yang digunakan untuk mengukur kinerja model adalah metrik mse (Mean Squared Error). Pemilihan matrik ini disebabkan karena kasus atau domain proyek yang dipilih adalah klasifikasi. Matrik MSE, pada dasarnya akan mengukur kuadrat rerata error dari prediksi yang dilakukan. MSE juga akan menghitung selisih kuadrat antara prediksi dan target, yang kemudian melakukan perhitungan rata-rata terhadap nilai-nilai tersebut.
-   
-	Rumus perhitungan matrik MSE: 
+Metrik evaluasi yang digunakan pada project ini adalah `Confusion Matrix`. . Confusion matrix digunakan untuk memvisualisasikan kinerja model. Matriks ini menunjukkan jumlah prediksi _true positive_, _true negative_, _false positive_, dan _false negative_ yang dihasilkan oleh model. Dengan diketahuinya _true positive_, _true negative_, _false positive_, dan _false negative_ ; parameter seperti  _Precision_, _Recall_ dan _F1-Score_ dapat dihitung. 
 
-	![alt](https://www.gstatic.com/education/formulas2/472522532/en/mean_squared_error.svg)
-
-	ket:
-
-	$\mathrm{MSE}$	=	mean squared error
-
-	${n}$	=	_number of data points_
-
-	$Y_{i}$	=	_observed values_ atau _ground truth_ dari nilai sebenarnya, dalam kasus ini nilai yang digunakan adalah nilai dari variabel `HeartDisease`
-
-	$\hat{Y}_{i}$	=	_predicted values_ atau _estimated target values_, dalam kasus ini nilai yang digunakan adalah nilai prediksi model terhadap variabel `HeartDisease`
+<img width="450" alt="eval-confusion" src="https://github.com/user-attachments/assets/9910a852-8343-4a1e-ab7f-0435e3ebfadd">
 
 
-	Semakin tinggi nilai yang diperoleh MSE, semakin buruk juga modelnya. Nilai MSE tidak pernah negatif, tetapi akan menjadi NOL untuk model yang sempurna. Dari hasil training didapatkan bahwa Model Random Forest adalah model yang menghasilkan nilai MSE yang paling kecil. 
+- _Precision_
+  Presisi adalah ukuran yang menunjukkan seberapa banyak prediksi true positive yang benar-benar sesuai. Presisi didefinisikan sebagai jumlah true positive (TP) dibagi dengan jumlah total true positive (TP) dan false positive (FP).
 
-	![MSE comparison](https://github.com/user-attachments/assets/9817fc88-fc52-4f94-887f-88a72d4338a1)
+	<img width="156" alt="Precision" src="https://github.com/user-attachments/assets/a7ece7cc-8a29-40ac-a377-653b0e0de463">
 
+- _Recalls_
+  Recall (atau Sensitivitas) adalah ukuran yang menunjukkan seberapa banyak kasus positif yang berhasil diidentifikasi dengan benar. Recall didefinisikan sebagai jumlah _true positive_ (TP) dibagi dengan jumlah total _true positive_ (TP) dan _false negative_ (FN).
+  
+	<img width="127" alt="Recall" src="https://github.com/user-attachments/assets/af2e1730-d276-44e2-8385-b585b5237aa6">
 
-2. Dilakukan juga analysis dengan menggunakan `confusion matrix` dan `Classification Report` . `Confusion Matrix` dilakukan untuk mengetahui informasi tentang jumlah prediksi yang benar dan salah untuk setiap kelas yang ada. Sementara `Classification Report` dibutuhkan untuk memahami kinerja model terutama ketika data tidak seimbang seperti yang yang sedang kita gunakan. 
+- _F1 Score_
+  F1-Score adalah rata-rata harmonik antara Precision dan Recall yang bertujuan untuk menemukan keseimbangan antara keduanya. F1-Score didefinisikan sebagai 2 kali hasil perkalian Precision dan Recall, dibagi dengan jumlah Precision dan Recall.
+
+ 	 <img width="202" alt="F1 score" src="https://github.com/user-attachments/assets/0aacc372-01f7-4a78-b83e-e81d4e379260">
+
+- _Support_
+  Support menunjukkan jumlah data  kategori tersebut.
+
+- _Akurasi_ menunjukkan persentase prediksi yang benar (untuk semua kelas) dari total prediksi yang dibuat.
+  Accuracy adalah proporsi prediksi yang benar dari total keseluruhan data. Rumusnya:
+
+	<img width="437" alt="Accuracy" src="https://github.com/user-attachments/assets/dd07b6e7-836d-455c-826b-64f516c31336">
+
+- _Macro average_
+  _Macro average_ adalah metode perhitungan rata-rata metrik (seperti precision, recall, atau F1-score) di seluruh kelas, di mana setiap kelas memiliki bobot yang sama, tanpa memperhitungkan jumlah data (support) dalam setiap kelas.
+
+	<img width="424" alt="macro_average" src="https://github.com/user-attachments/assets/63c0d386-b080-4738-a229-3a575f2d1f66">
+
+- _Weight average_
+  _Weighted average_ adalah metode perhitungan rata-rata metrik (seperti precision, recall, atau F1-score) di seluruh kelas dengan memberikan bobot sesuai dengan jumlah data (support) dalam setiap kelas.
+
+	<img width="533" alt="weighted rata-rata berbobot" src="https://github.com/user-attachments/assets/5ea3bf0c-70d6-47ab-9dfb-35284d644197">
+
+Didapatkan hasil seperti : 
 
 | Class             | Precision | Recall | F1-Score | Support |
 |-------------------|-----------|--------|----------|---------|
@@ -496,10 +511,9 @@ Hal ini berarti :
 
 ![Confusion Matrix for Random forest](https://github.com/user-attachments/assets/2f6aee59-3c08-47c1-8c4c-5bc580b1c488)
 
+A | Kelas 0 (Non-diabetes): menunjukkan performa yang sangat baik dengan precision sebesar 0.98, artinya 98% prediksi untuk kelas ini benar. Dengan recall sebesar 0.95, model mampu mengenali 95% dari seluruh data aktual kelas 0, yang menunjukkan tingkat sensitivitas tinggi terhadap data kelas ini. Nilai F1-score sebesar 0.97 mengindikasikan keseimbangan yang kuat antara precision dan recall, dengan dukungan dari 17,525 data aktual di kelas 0.
 
-A | Kelas 0 (Non-diabetes): Model memiliki presisi yang tinggi (0,98) untuk kelas 0, yang berarti bahwa di antara semua instance yang diprediksi sebagai non-diabetes oleh model, 98% benar-benar non-diabetes. Recall untuk kelas 0 juga tinggi (0,96). Ini berarti model kita berhasil mengidentifikasi 96% dari semua kasus non-diabetes yang sebenarnya dalam dataset.
-
-B | Kelas 1 (Diabetes): Presisi untuk kelas 1 lebih rendah sekitar (0,65), yang menunjukkan bahwa ketika model memprediksi diabetes, prediksinya benar sekitar 65% dari waktu. Namun, recallnya cukup tinggi sekitar (0,80). Ini berarti model kita mampu menangkap sekitar 80% dari semua kasus diabetes yang sebenarnya. Skor F1, yang merupakan rata-rata harmonik antara presisi dan recall, sekitar 0,97 untuk kelas 0 dan sekitar 0,72 untuk kelas 1. Rata-rata tertimbang skor F1 sekitar 0,94, sejalan dengan akurasi keseluruhan.
+B | Kelas 1 (Diabetes): Untuk kelas minoritas (kelas 1), model mencapai Precision sebesar 0,63, yang menunjukkan bahwa 63% prediksi dengan label 1 adalah benar, meskipun terdapat jumlah false positive yang cukup signifikan. Recall sebesar 0,82 mengindikasikan bahwa model berhasil mengidentifikasi 82% data aktual dengan label 1, sehingga mampu meminimalkan false negative. Dengan F1-Score sebesar 0,71, model menunjukkan keseimbangan yang moderat antara Precision dan Recall, berdasarkan evaluasi terhadap 1.701 sampel aktual pada kelas ini.
 
 Perbedaan kinerja antara kelas-kelas ini kemungkinan disebabkan oleh ketidakseimbangan dalam dataset asli. Kelas 0 (Non-diabetes) adalah kelas mayoritas dan memiliki lebih banyak contoh yang dapat dipelajari oleh model.
 
@@ -508,8 +522,6 @@ Namun, recall yang lebih tinggi untuk kelas 1 (Diabetes) menjanjikan. Ini adalah
 3. Dibutuhkan juga informasi `Feature Importance` baru yang didapatkan setelah perhitungan dengan model.
    
 ![Feature Importance](https://github.com/user-attachments/assets/17ae83b2-557e-498f-befa-f2e633d6bb2e)
-
-
 
 * HbA1c_level adalah fitur yang paling penting dengan nilai penting sebesar 0,44. HbA1c adalah ukuran rata-rata kadar glukosa darah selama 2 hingga 3 bulan terakhir, sehingga tidak mengherankan jika ini merupakan prediktor signifikan untuk diabetes.
 
@@ -521,9 +533,12 @@ Namun, recall yang lebih tinggi untuk kelas 1 (Diabetes) menjanjikan. Ini adalah
 
 
 ## Conclusion
-Dari perbandingan data MSE tersebut, maka dapat dilihat bahwa Random Forest memiliki nilai yang paling kecil. Selain itu, Model **Random Forest** menunjukkan kinerja terbaik secara keseluruhan berdasarkan metrik akurasi, presisi, recall, skor F1, dan metrik error (MSE dan MAE), yang mengindikasikan tingkat keandalan tinggi dalam generalisasi dan minimisasi kesalahan. Oleh karena itu, Random Forest menjadi pilihan terbaik apabila prioritasnya adalah akurasi dan performa seimbang di berbagai metrik walaupun diperlukan pengaturan hyperparameter lebih lanjut dan proses balancing data untuk dapat mempredikasi diabetes dengan lebih tepat.
+Dari evaluasi, **Random Forest** memiliki nilai accuracy yang cukup tinggi yaitu 0.9749. 
 
-Sehingga dengan model ini dapat diketahui bahwa variabel-variabel kesehatan yang berpotensi mempengaruhi apakah pasien memiliki potensi penyakit diabetes (_diabetic disease_) adalah level HbA1c, _blood glucose level_, umur dan tingkat BMI pasien. 
+Model mencapai akurasi sekitar 95,1%, dengan precision sebesar 0,98 untuk kelas 0 (non-diabetes) dan 0,69 untuk kelas 1 (diabetes). Model juga mampu mengidentifikasi 96% kasus non-diabetes dengan benar (recall untuk kelas 0) serta 81% kasus diabetes (recall untuk kelas 1). Akurasi yang cukup tinggi dan performa yang seimbang pada kedua kelas menunjukkan bahwa model telah dioptimalkan dengan baik dan cukup robust.
+
+Analisis pentingnya fitur menyoroti bahwa HbA1c_level dan blood_glucose_level merupakan faktor paling penting dalam memprediksi diabetes. Usia (age) dan BMI juga memiliki pengaruh yang signifikan. Namun, beberapa fitur seperti riwayat merokok (smoking history) dan jenis kelamin (gender) memiliki dampak minimal atau bahkan tidak memengaruhi prediksi model.
+
 
 Referensi:
 
