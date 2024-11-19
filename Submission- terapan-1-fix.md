@@ -26,17 +26,6 @@ Untuk mengetahui kecenderungan (_prediksi_) suatu pasien menderita penyakit diab
 ### Solution statements
 Solusi pembuatan model yang dilakukan adalah dengan menerapkan 4 algoritma machine learning, terbatas pada **_K-NN_**, **_Random Forest_**, **_Logistic Regression_**, dan **_SVM_**. Diterapkannya 4 algoritma tersebut bertujuan untuk mengkomparasi dan mendapatkan model atau algoritma yang memiliki tingkat _error_ yang paling kecil, sehingga prediksi penyakit jantung memiliki akurasi yang tinggi.
 
-- **_K-NN_**
-Algoritma _K-Nearest Neighbor_ (K-NN) adalah algoritma _machine learning_ yang sederhana dan mudah diterapkan, yang mana umumnya digunakan untuk menyelesaikan masalah klasifikasi dan regresi. Algoritma ini termasuk dalam _supervised learning_. Tujuan dari algortima K-NN adalah untuk mengidentifikasi _nearest neighbor_ dari titik yang diberikan, sehingga dapat menetapkan label prediksi ke titik tersebut.
-
-- **_Random Forest_**
-_Random forest_ adalah kombinasi dari masing – masing _tree_ atau pohon, yang kemudian dikombinasikan ke dalam satu model. _Random Forest_ bergantung pada sebuah nilai vector acak dengan distribusi yang sama pada semua pohon yang masing masing _tree_ memiliki kedalaman yang maksimal.
-
-- **_Logistic Regression_**
- _Logistic Regression_ adalah algoritma pembelajaran mesin **terawasi** yang digunakan untuk tugas klasifikasi biner. Algoritma ini bekerja baik ketika hubungan antara fitur dan target bersifat linier.
-
- - **_SVM_** adalah algoritma _Supervised Machine Learning_ yang digunakan untuk tugas klasifikasi dan regresi. Algoritma ini bekerja dengan mencari hyperplane optimal yang memisahkan kelas yang berbeda dalam ruang berdimensi tinggi. SVM juga dapat menggunakan kernel untuk memproyeksikan data ke dimensi yang lebih tinggi untuk klasifikasi non-linier.
-
 ## Data Understanding
 Dataset yang digunakan pada proyek _machine learning_ merupakan data yang didapatkan dari situs yang didapat dari situs [kaggle](https://www.kaggle.com/datasets/iammustafatz/diabetes-prediction-dataset). Dataset ini merupakan kumpulan data medis dan demografis dari pasien, beserta status diabetes mereka . Data ini mencakup fitur-fitur seperti **usia**, **jenis kelamin**, **indeks massa tubuh** (***BMI***), **hipertensi**, **penyakit jantung**, **riwayat merokok**, **kadar HbA1c**, dan **kadar glukosa darah**.
 
@@ -83,8 +72,14 @@ Dataset yang digunakan pada proyek _machine learning_ merupakan data yang didapa
       
 8.   Kadar glukosa darah (mg/dL)
     - Kadar glukosa darah mengacu pada jumlah glukosa (gula) yang terdapat dalam darah pada waktu tertentu. Kadar glukosa darah yang tinggi, terutama dalam keadaan puasa atau setelah mengonsumsi karbohidrat, dapat mengindikasikan gangguan regulasi glukosa dan meningkatkan risiko perkembangan diabetes. Pemantauan kadar glukosa darah secara rutin sangat penting dalam diagnosis dan pengelolaan diabetes.
-    - Variable :    
-      - Nilai Numerik antara 80 dan 300
+     - Variable :
+     	- Nilai Numerik antara 80 dan 300
+        
+10.   Diabetes
+    - Fitur diabetes menggambarkan apakah pasien diketahui memiliki diabetes atau tidak. Fitur ini menjadi target dari perhitungan.
+      - Variable :
+     	- 0 : (_Normal_)
+      	- 1 : (_Diabetes_)
 
 Secara keseluruhan, data memiliki 100000 entries, 0 to 99999. Data juga memiliki 9 kolom yang terdiri dari:
 | #  | Column              | Non-Null Count   | Dtype    |
@@ -99,16 +94,13 @@ Secara keseluruhan, data memiliki 100000 entries, 0 to 99999. Data juga memiliki
 | 7  | blood_glucose_level | 100000 non-null | int64    |
 | 8  | diabetes            | 100000 non-null | int64    |
 
-Data juga memiliki 3,854 _duplicate rows_ dalam 9 kolom data. Untuk itu diperlukan pembersihan data dari _duplicated rows_ dengan menggunakan :
 
-	
-		duplicate_rows_data = diabetic_disease[diabetic_disease.duplicated()]
-		print("number of duplicate rows: ", duplicate_rows_data.shape)
+Diketahui data memiliki 3854 data terduplikasi dari 9 fitur yang tersedia.
 
-		diabetic_disease = diabetic_disease.drop_duplicates()
+| Metric                         | Count                              |
+|--------------------------------|------------------------------------|
+| Number of duplicate rows       | (3854, 9)                         |
 
-		a = diabetic_disease[diabetic_disease.duplicated()].value_counts()
-		print("number of duplicate rows after: ", a)
 
 Kemudian dilakukan pengecekkan _distinct value_ dari 9 kolom tersebut dan didapatkan : 
 
@@ -124,18 +116,6 @@ Kemudian dilakukan pengecekkan _distinct value_ dari 9 kolom tersebut dan didapa
 | Blood Glucose Level  | 18              |
 | Diabetes             | 2               |
 
-Terdapat jumlah _distinct value_ yang harus dibersihkan yaitu pada kolom gender. Seharusnya kolom gender memiliki 2 _distinct value_. Namun pada tabel menunjukkan fitur memiliki 3 _distinct value_. Karena jumlah kategori 'other' jauh lebih sedikit, maka nilai 'other' akan di bersihkan dengan :
-
-		diabetic_disease['gender'].value_counts()  
-		diabetic_disease = diabetic_disease.drop(diabetic_disease[diabetic_disease['gender'] == 'Other'].index)
-		diabetic_disease['gender'].value_counts()
-
-sehingga menghasilkan : 
-
-| Gender | Count  |
-|--------|--------|
-| Female | 56161  |
-| Male   | 39967  |
 
 
 [2]: [Diabetic Dataset](https://www.kaggle.com/datasets/iammustafatz/diabetes-prediction-dataset)
@@ -146,6 +126,10 @@ Untuk memahami data _diabetic desise_ dilakukan visualisasi menggunakan _bar cha
 #### *Univariate Analysis - Categorical Feature*
 
 1. _Univariate Analysis_ terhadap Diabetic Disease
+
+![image](https://github.com/user-attachments/assets/aff99bfb-43d5-404a-8782-a9d6676ff1c9)
+
+
 ![ua-countplot diabetes](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/1.%20countplot%20diabetes.png)	
 
 Perlu diketahui bahwa variabel target dari predictive analysis yang dilakukan adalah diabetes.
@@ -285,11 +269,41 @@ Memiliki korelasi terlemah di antara fitur yang tercantum, namun tetap dapat ber
 
 _Data preparation_ yang digunakan di antaranya:
 
-1. Seleksi Data: Menyeleksi data apakah data tersebut ada yang kosong atau tidak, jika ada data kosong maka akan dihapus.
+1. Dropping _duplicated rows_. Diketahu data memiliki 3,854 _duplicate rows_ dalam 9 kolom data. Untuk itu diperlukan pembersihan data dari _duplicated rows_ dengan menggunakan :
+
+	
+		duplicate_rows_data = diabetic_disease[diabetic_disease.duplicated()]
+		print("number of duplicate rows: ", duplicate_rows_data.shape)
+
+		diabetic_disease = diabetic_disease.drop_duplicates()
+
+		a = diabetic_disease[diabetic_disease.duplicated()].value_counts()
+		print("number of duplicate rows after: ", a)
+
+2. Seleksi Data: Menyeleksi data apakah data tersebut ada yang kosong atau tidak, jika ada data kosong maka akan dihapus.
 `isnull().sum()` merupakan command yang digunakan untuk mengecek apakah terdapat data yang kosong atau missing data dan menjumlahkan banyak datanya. Namun, tidak terdapat data kosong atau missing data.
 
+3. Menghapus nilai tertentu
+Terdapat jumlah _distinct value_ yang harus dibersihkan yaitu pada kolom gender. Seharusnya kolom gender memiliki 2 _distinct value_. Namun pada tabel menunjukkan fitur memiliki 3 _distinct value_. Karena jumlah kategori 'other' jauh lebih sedikit, maka nilai 'other' akan di bersihkan dengan :
 
-3. Menangani Outlier: Melakukan pengecekan apakah data `diabetic_disease` memiliki data outlier. Dalam menangani _outlier_, digunakan metode IQR. Ditemukan _outlier_ pada data `diabetic_disease`, hal ini ditemukan dengan melakukan visualisasi dengan `boxplot`. Untuk mengidentifikasi _outlier_ yang ada, maka digunakan metode IQR.
+		diabetic_disease['gender'].value_counts()  
+		diabetic_disease = diabetic_disease.drop(diabetic_disease[diabetic_disease['gender'] == 'Other'].index)
+		diabetic_disease['gender'].value_counts()
+
+sehingga menghasilkan : 
+
+| Gender | Count  |
+|--------|--------|
+| Female | 56161  |
+| Male   | 39967  |
+
+4. Klasifikasi fitur
+Fitur-fitur pada data dapat diklasifikasikan menjadi 2 kategori; yaitu fitur kategorikal dan fitur numerikal. 
+	```
+	categorical_feature = ['gender', 'smoking_history', 'hypertension', 'heart_disease']
+	numerical_feature = ['age', 'bmi', 'HbA1c_level', 'blood_glucose_level', 'diabetes']
+
+5. Menangani Outlier: Melakukan pengecekan apakah data `diabetic_disease` memiliki data outlier. Dalam menangani _outlier_, digunakan metode IQR. Ditemukan _outlier_ pada data `diabetic_disease`, hal ini ditemukan dengan melakukan visualisasi dengan `boxplot`. Untuk mengidentifikasi _outlier_ yang ada, maka digunakan metode IQR.
 
 | Feature             | Count  |
 |---------------------|--------|
@@ -305,7 +319,7 @@ _Data preparation_ yang digunakan di antaranya:
 
 Sebagaimana kita telah lihat, seluruh fitur memiliki outlier yang cukup banyak. Mengingat data ini adalah data medis yang dapat memberikan wawasan penting mengenai kondisi langka, variasi individual pasien, dan potensi risiko kesehatan, data outlier tidak dihapuskan.
 
-4. Melakukan re-grouping Smoking History
+6. Melakukan re-grouping Smoking History
 Data smoki1ng history yang dapat memberikan informasi bagus untuk mengetahui korelasinya dengan diabetes, memiliki terlalu banyak data `No Info`. Untuk itu dilakukan regrouping dengan menyatukan `No Info` dengan `never`, dan ketegori `ever`, `former`, dan `not curret` menjadi `past_smoker`.
 
 | Smoking History | Count  |
@@ -314,55 +328,73 @@ Data smoki1ng history yang dapat memberikan informasi bagus untuk mengetahui kor
 | Past Smoker     | 19655  |
 | Current         | 9197   |
 
-5. Melakukan Label Encoder: Melakukan proses encoding terhadap `categorical_feature`. Hal ini dilakukan karena fitur-fitur kategorikal perlu dirubah agar dapat digunakan pada tahap _modeling_. Fungsi yang digunakan adalah `perform_one_hot_encoding` yang digunakan untuk mengubah kolom kategori, seperti gender dan smoking_history, menjadi kolom-kolom baru yang berisi nilai 0 atau 1
+7. Melakukan Label Encoder: Melakukan proses encoding terhadap `categorical_feature`. Hal ini dilakukan karena fitur-fitur kategorikal perlu dirubah agar dapat digunakan pada tahap _modeling_. Fungsi yang digunakan adalah `perform_one_hot_encoding` yang digunakan untuk mengubah kolom kategori, seperti gender dan smoking_history, menjadi kolom-kolom baru yang berisi nilai 0 atau 1
 
-6. Data Imbalance
+		data = perform_one_hot_encoding(data, 'gender')
+		data = perform_one_hot_encoding(data, 'smoking_history')
+8. Data Imbalance
 Dari hasil Exploratory Data Analysis (EDA), dataset menunjukkan ketidakseimbangan (dengan 9% kasus positif diabetes dan 91% kasus negatif), sehingga penting untuk menyeimbangkan data agar model tidak bias terhadap kelas mayoritas. Untuk tujuan ini, digunakan Synthetic Minority Over-sampling Technique (SMOTE), yang menghasilkan sampel sintetis untuk kelas minoritas.
 
   		over = SMOTE(sampling_strategy=0.1)
 		under = RandomUnderSampler(sampling_strategy=0.5)
 
-8. Standarisasi: membantu membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma. Dalam standarisasi, digunakan _module_ `StandarScaler` yang dapat ditemukan pada _library_ `sklearn`. `StandardScaler` dalam sklearn didasarkan pada asumsi bahwa data, Y, mengikuti distribusi yang mungkin tidak harus Gaussian (normal), tetapi tetap diubah sehingga memiliki nilai rata-rata 0 dan deviasi standar 1.
+10. Feature Selection with SelectKBest
+SelectKBest digunakan untuk memilih fitur-fitur teratas yang memiliki kekuatan prediktif paling besar terhadap variabel target (diabetes). Parameter `score_func=f_classif` menunjukkan bahwa kita menggunakan nilai `F ANOVA` (sebagai ukuran signifikansi statistik) untuk mengurutkan setiap fitur, kemudian memilih 5 fitur terbaik. Hal ini membantu mengurangi dimensi data dan hanya menyimpan fitur-fitur yang paling berkorelasi dengan target.
 
-9. Feature Selection with SelectKBest
-SelectKBest digunakan untuk memilih fitur-fitur teratas yang memiliki kekuatan prediktif paling besar terhadap variabel target (diabetes). Parameter score_func=f_classif menunjukkan bahwa kita menggunakan nilai `F ANOVA` (sebagai ukuran signifikansi statistik) untuk mengurutkan setiap fitur, kemudian memilih 5 fitur terbaik. Hal ini membantu mengurangi dimensi data dan hanya menyimpan fitur-fitur yang paling berkorelasi dengan target.
+11. Memisahkan Data menjadi Fitur dan Target
+X didefinisikan sebagai semua kolom kecuali kolom diabetes, dan y ditetapkan sebagai variabel target (diasumsikan berada di kolom yang dinamai diabetes).
 
-10. Column Transformer
-ColumnTransformer memungkinkan kita melakukan pra-pemrosesan yang berbeda untuk fitur numerik dan fitur kategorikal:
+		X = data.drop('diabetes', axis=1)  # Assuming 'diabetes' is the target column
+		y = data['diabetes']
+
+13.  Standarisasi dan Column Transformer: membantu membuat fitur data menjadi bentuk yang lebih mudah diolah oleh algoritma. ColumnTransformer memungkinkan kita melakukan pra-pemrosesan yang berbeda untuk fitur numerik dan fitur kategorikal:
 
 Fitur Numerik: `StandardScaler()` menormalisasi fitur-fitur age, bmi, HbA1c_level, blood_glucose_level, hypertension, dan heart_disease agar memiliki rata-rata 0 dan standar deviasi 1, yang dapat meningkatkan kinerja model, terutama untuk model yang sensitif terhadap skala fitur.
 
 Fitur Kategorikal: `OneHotEncoder()` mengubah kolom kategorikal seperti gender dan smoking_history menjadi kolom indikator biner. handle_unknown='ignore' memastikan bahwa kategori baru atau tidak dikenal akan diabaikan.
 
-11. Memisahkan Data menjadi Fitur dan Target
-X didefinisikan sebagai semua kolom kecuali kolom diabetes, dan y ditetapkan sebagai variabel target (diasumsikan berada di kolom yang dinamai diabetes).
+		'''preprocessor = ColumnTransformer( transformers=[
+        ('num', StandardScaler(), ['age', 'bmi', 'HbA1c_level', 'blood_glucose_level', 'hypertension', 'heart_disease']),
+        ('cat', OneHotEncoder(sparse_output=False, handle_unknown='ignore'),
+         [col for col in X.columns if col.startswith('gender') or col.startswith('smoking_history')])])
 
-12. Melakukan Splitting: membagi data menjadi _training_ dan _testing_ untuk _modeling_. Dalam melakukan _splitting_, digunakan rasio 80:20, yang berarti 80% data training, dan 20% data testing.
-
+13. Melakukan Splitting: membagi data menjadi _training_ dan _testing_ untuk _modeling_. Dalam melakukan _splitting_, digunakan rasio 80:20, yang berarti 80% data training, dan 20% data testing.
 
 ## Modeling
 Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Proses ini dilakukan dengan menggunakan empat Algoritma. 
 
-1. Menentukan dan Menginisialisasi Model
-   Sebuah dictionary models dibuat untuk mendefinisikan empat model klasifikasi berbeda:
-    
-    *   K-Nearest Neighbors (KNN):
+- **_K-NN_**
+Algoritma _K-Nearest Neighbor_ (K-NN) adalah algoritma _machine learning_ yang sederhana dan mudah diterapkan, yang mana umumnya digunakan untuk menyelesaikan masalah klasifikasi dan regresi. Algoritma ini termasuk dalam _supervised learning_. Tujuan dari algortima K-NN adalah untuk mengidentifikasi _nearest neighbor_ dari titik yang diberikan, sehingga dapat menetapkan label prediksi ke titik tersebut.
 
-    Menggunakan n_neighbors=5 untuk menentukan jumlah tetangga terdekat.
+  		'K-Nearest Neighbors': KNeighborsClassifier(n_neighbors=5)
 
-    *   Logistic Regression:
-      
-    Model klasifikasi linear yang sederhana namun efektif, dengan max_iter=500 agar model bisa konvergen meskipun data kompleks.
+`n_neighbors=5` : Parameter ini menentukan jumlah _nearest neighbor_ yang akan dipertimbangkan saat membuat prediksi. Dalam hal ini, model akan mempertimbangkan 5 tetangga terdekat untuk mengklasifikasikan suatu titik data.
 
-    *   Support Vector Machine (SVM):
 
-    Menggunakan kernel linear untukperhitungan yang lebih cepat karena membutuhkan sumber daya yang lebih sedikit dibandingkan kernel non-linear.
+- **_Random Forest_**
+_Random forest_ adalah kombinasi dari masing – masing _tree_ atau pohon, yang kemudian dikombinasikan ke dalam satu model. _Random Forest_ bergantung pada sebuah nilai vector acak dengan distribusi yang sama pada semua pohon yang masing masing _tree_ memiliki kedalaman yang maksimal.
 
-   *   Random Forest:
-    
-    Menggunakan `n_estimators=50` (50 *decision tree*) dengan pemrosesan paralel melalui `n_jobs=-1` untuk efisiensi.
+		'Random Forest': RandomForestClassifier(n_estimators=50, n_jobs=-1)
 
- Hasil akhirnya adalah untuk mencari algoritma yang memiliki performa paling baik dari ketiga algoritma yang digunakan. Dapat dilihat dari _bar chart_ yang menunjukkan tiga model algoritma yang digunakan. Diketahui bahwa algoritma KNN merupakan algoritma yang memiliki error yang paling kecil dibanding model lainnya.
+`n_estimators=50`: Parameter ini menentukan jumlah pohon dalam hutan. Dalam hal ini, hutan terdiri dari 50 pohon. Menggunakan jumlah pohon yang lebih sedikit dapat membuat model lebih sederhana dan lebih cepat dalam pelatihan, meskipun akurasi mungkin sedikit menurun.
+
+`n_jobs=-1`: Parameter ini menentukan jumlah inti CPU yang digunakan selama pelatihan. Dengan menetapkan nilai -1, maka semua inti yang tersedia akan digunakan, yang dapat mempercepat pelatihan, terutama dengan dataset yang besar.
+
+
+- **_Logistic Regression_**
+ _Logistic Regression_ adalah algoritma pembelajaran mesin **terawasi** yang digunakan untuk tugas klasifikasi biner. Algoritma ini bekerja baik ketika hubungan antara fitur dan target bersifat linier.
+
+		'Logistic Regression': LogisticRegression(max_iter=500)
+
+`max_iter=500`: Parameter ini menentukan jumlah iterasi maksimum yang dapat digunakan solver untuk menemukan koefisien logistik yang optimal. Jika solver tidak dapat mencapai konvergensi dalam 500 iterasi, maka pelatihan akan dihentikan. Meningkatkan nilai `max_iter` bisa membantu ketika data yang digunakan besar atau modelnya kompleks.
+
+
+ - **_SVM_** adalah algoritma _Supervised Machine Learning_ yang digunakan untuk tugas klasifikasi dan regresi. Algoritma ini bekerja dengan mencari hyperplane optimal yang memisahkan kelas yang berbeda dalam ruang berdimensi tinggi. SVM juga dapat menggunakan kernel untuk memproyeksikan data ke dimensi yang lebih tinggi untuk klasifikasi non-linier.
+
+		'Support Vector Machine': SVC(kernel='linear')
+
+`kernel='linear'`: Parameter ini menentukan jenis kernel yang digunakan. Linear kernel berarti SVM akan menggunakan hyperplane linier untuk memisahkan kelas-kelas data. Ini lebih cepat secara komputasi dibandingkan dengan kernel non-linier seperti RBF (Radial Basis Function), dan berguna ketika data hampir bisa dipisahkan secara linier.
+
 
 2. _Hypermarameter Tuning_
 Untuk mengetahui model yang paling efektif bersama dengan setting _hyperparameter_ yang paling baik, digunakan teknik _hyperparameter tuning_. Hal ini dilakukan sebagai tahap persiapan untuk melakukan `GridSearchCV`. `GridSearchCV` digunakan untuk mencoba setiap kombinasi nilai _hyperparameter_ yang ada dalam grid dan mengevaluasi kinerja model untuk setiap kombinasi tersebut.
@@ -415,9 +447,26 @@ Hal ini berarti :
 4. `n_estimators` sebesar 50: Ini adalah jumlah decision trees. Algoritma Random Forest bekerja dengan merata-rata prediksi dari banyak decision trees untuk menghasilkan prediksi akhir, yang membantu mengurangi overfitting dan variansi.
 
 ## Evaluation
-1. Evaluasi metrik yang digunakan untuk mengukur kinerja model adalah metrik mse (Mean Squared Error). Pemilihan matrik ini disebabkan karena kasus atau domain proyek yang dipilih adalah klasifikasi. Matrik MSE, pada dasarnya akan mengukur kuadrat rerata error dari prediksi yang dilakukan. MSE juga akan menghitung selisih kuadrat antara prediksi dan target, yang kemudian melakukan perhitungan rata-rata terhadap nilai-nilai tersebut. Semakin tinggi nilai yang diperoleh MSE, semakin buruk juga modelnya. Nilai MSE tidak pernah negatif, tetapi akan menjadi NOL untuk model yang sempurna. Dari hasil training didapatkan bahwa Model Random Forest adalah model yang menghasilkan nilai MSE yang paling kecil. 
+1. Evaluasi metrik yang digunakan untuk mengukur kinerja model adalah metrik mse (Mean Squared Error). Pemilihan matrik ini disebabkan karena kasus atau domain proyek yang dipilih adalah klasifikasi. Matrik MSE, pada dasarnya akan mengukur kuadrat rerata error dari prediksi yang dilakukan. MSE juga akan menghitung selisih kuadrat antara prediksi dan target, yang kemudian melakukan perhitungan rata-rata terhadap nilai-nilai tersebut.
+   
+Rumus perhitungan matrik MSE: 
 
-![mse](https://github.com/DiniLestari/Submission1-dicoding/blob/a3352a88325c81fed9a9c85a0c4c5fe086139917/MSE%20comparison.png)
+![alt](https://www.gstatic.com/education/formulas2/472522532/en/mean_squared_error.svg)
+
+ket:
+
+$\mathrm{MSE}$	=	mean squared error
+
+${n}$	=	_number of data points_
+
+$Y_{i}$	=	_observed values_ atau _ground truth_ dari nilai sebenarnya, dalam kasus ini nilai yang digunakan adalah nilai dari variabel `HeartDisease`
+
+$\hat{Y}_{i}$	=	_predicted values_ atau _estimated target values_, dalam kasus ini nilai yang digunakan adalah nilai prediksi model terhadap variabel `HeartDisease`
+
+
+Semakin tinggi nilai yang diperoleh MSE, semakin buruk juga modelnya. Nilai MSE tidak pernah negatif, tetapi akan menjadi NOL untuk model yang sempurna. Dari hasil training didapatkan bahwa Model Random Forest adalah model yang menghasilkan nilai MSE yang paling kecil. 
+
+![mse](https://github.com/DiniLestari/Submission1-dicoding/blob/646d612ff779f34e72aad31b395d49083afdd34b/MSE%20comparison.png)
 
 2. Dilakukan juga analysis dengan menggunakan `confusion matrix` dan `Classification Report` . `Confusion Matrix` dilakukan untuk mengetahui informasi tentang jumlah prediksi yang benar dan salah untuk setiap kelas yang ada. Sementara `Classification Report` dibutuhkan untuk memahami kinerja model terutama ketika data tidak seimbang seperti yang yang sedang kita gunakan. 
 
