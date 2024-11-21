@@ -378,9 +378,12 @@ X didefinisikan sebagai semua kolom kecuali kolom diabetes, dan y ditetapkan seb
 
 ## Modeling
 Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Proses ini dilakukan dengan menggunakan empat Algoritma. 
-1. _Models_
+
+1. **_Models_**
+   
 - **_K-NN_**
-   Algoritma _K-Nearest Neighbor_ (K-NN) adalah algoritma _machine learning_ yang sederhana dan mudah diterapkan, yang mana umumnya digunakan untuk menyelesaikan masalah klasifikasi dan regresi. Algoritma ini termasuk dalam _supervised learning_. Tujuan dari algortima K-NN adalah untuk mengidentifikasi _nearest neighbor_ dari titik yang diberikan, sehingga dapat menetapkan label prediksi ke titik tersebut.
+
+	Algoritma _K-Nearest Neighbor_ (K-NN) adalah algoritma _machine learning_ yang sederhana dan mudah diterapkan, yang mana umumnya digunakan untuk menyelesaikan masalah klasifikasi dan regresi. Algoritma ini termasuk dalam _supervised learning_. Tujuan dari algortima K-NN adalah untuk mengidentifikasi _nearest neighbor_ dari titik yang diberikan, sehingga dapat menetapkan label prediksi ke titik tersebut.
 
   		'K-Nearest Neighbors': KNeighborsClassifier(n_neighbors=5)
 
@@ -388,7 +391,8 @@ Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyel
 
 
 - **_Random Forest_**
-_Random forest_ adalah kombinasi dari masing – masing _tree_ atau pohon, yang kemudian dikombinasikan ke dalam satu model. _Random Forest_ bergantung pada sebuah nilai vector acak dengan distribusi yang sama pada semua pohon yang masing masing _tree_ memiliki kedalaman yang maksimal.
+
+  	_Random forest_ adalah kombinasi dari masing – masing _tree_ atau pohon, yang kemudian dikombinasikan ke dalam satu model. _Random Forest_ bergantung pada sebuah nilai vector acak dengan distribusi yang sama pada semua pohon yang masing masing _tree_ memiliki kedalaman yang maksimal.
 
 		'Random Forest': RandomForestClassifier(n_estimators=50, n_jobs=-1)
 
@@ -397,7 +401,8 @@ _Random forest_ adalah kombinasi dari masing – masing _tree_ atau pohon, yang 
 
 
 - **_Logistic Regression_**
- _Logistic Regression_ adalah algoritma pembelajaran mesin **terawasi** yang digunakan untuk tugas klasifikasi biner. Algoritma ini bekerja baik ketika hubungan antara fitur dan target bersifat linier.
+
+  	_Logistic Regression_ adalah algoritma pembelajaran mesin **terawasi** yang digunakan untuk tugas klasifikasi biner. Algoritma ini bekerja baik ketika hubungan antara fitur dan target bersifat linier.
 
 		'Logistic Regression': LogisticRegression(max_iter=500)
 
@@ -410,61 +415,101 @@ _Random forest_ adalah kombinasi dari masing – masing _tree_ atau pohon, yang 
 
 	- `kernel='linear'`: Parameter ini menentukan jenis kernel yang digunakan. Linear kernel berarti SVM akan menggunakan hyperplane linier untuk memisahkan kelas-kelas data. Ini lebih cepat secara komputasi dibandingkan dengan kernel non-linier seperti RBF (Radial Basis Function), dan berguna ketika data hampir bisa dipisahkan secara linier.
 
+2. **_Langkah pemodelan_**
+   
+   	a. Membuat pipeline
+    	Pada langkah ini, pipeline dibuat untuk mengintegrasikan proses preprocessing data, oversampling/undersampling untuk menangani data yang tidak seimbang, serta model klasifikasi yang akan digunakan.
 
-2. _Hypermarameter Tuning_
-Untuk mengetahui model yang paling efektif bersama dengan setting _hyperparameter_ yang paling baik, digunakan teknik _hyperparameter tuning_. Hal ini dilakukan sebagai tahap persiapan untuk melakukan `GridSearchCV`. `GridSearchCV` digunakan untuk mencoba setiap kombinasi nilai _hyperparameter_ yang ada dalam grid dan mengevaluasi kinerja model untuk setiap kombinasi tersebut.
+ 
+   		clf = imbPipeline(steps=[('preprocessor', preprocessor),
+                             ('over', over),
+                             ('under', under),
+                             ('classifier', model)])
 
-Perhitungan diawali dengan :
-- Membuat pipeline
-	- Menggunakan imbPipeline untuk menghubungkan beberapa langkah:
+
+   terdapat tiga langkah dasar membuat pipeline:
 	- _preprocessor_: Melakukan preprocessing data.
 	- _over dan under_: Menangani sampling berlebih dan kurang.
 	- _classifier_: Model klasifikasi.
 
-- KOnfigurasi Grid Search
-`GridSearchCV` disiapkan untuk:
-   	- Menggunakan pipeline (`clf`).
-    	- Melakukan pencarian berdasarkan grid parameter spesifik model (param_grids[model_name]).
-    	- Melakukan validasi silang dengan 5 lipatan (cv=5).
-    	
-- Melatih Grid Search
-Data pelatihan (X_train, y_train) digunakan untuk melatih model sekaligus menyesuaikan _hyperparameter_.
+   	b. Pengaturan Grid Search dan _Hypermarameter Tuning_
+	Untuk mengetahui model yang paling efektif bersama dengan setting _hyperparameter_ yang paling baik, digunakan teknik _hyperparameter tuning_. Hal ini dilakukan sebagai tahap persiapan untuk melakukan `GridSearchCV`. `GridSearchCV` digunakan untuk mencoba setiap kombinasi nilai _hyperparameter_ yang ada dalam grid dan mengevaluasi kinerja model untuk setiap kombinasi tersebut.
 
-- Melatih Prediksi
-Melakukan prediksi (y_train_pred, y_test_pred) untuk dataset pelatihan dan pengujian.
+    	grid_search = GridSearchCV(clf, param_grids[model_name], cv=5, scoring='roc_auc')
+   	
 
-- Hasil Grid Search
-Setelah dilakukan training, hasil Grid Search yaitu : 
+	c. Melatih Grid Search
+	Data pelatihan (X_train, y_train) digunakan untuk melatih model sekaligus menyesuaikan _hyperparameter_.
 
-| Model                | Best Score |
-|----------------------|------------|
-| K-Nearest Neighbors  | 0.954372   |
-| Logistic Regression  | 0.962170   |
-| Support Vector Machine| 0.965561   |
-| Random Forest        | 0.974907   |
+		grid_search.fit(X_train, y_train)	
 
-Dengan parameter: 
 
-| Metric            | Value                                                   |
-|-------------------|---------------------------------------------------------|
-| Best Model        | Random Forest                                          |
-| Best Score        | 0.9749073469764529                                     |
-| Best Parameters   | 'classifier__max_depth': 20, 'classifier__min_samples_leaf': 4, 'classifier__min_samples_split': 2, 'classifier__n_estimators': 50 |
+	d. Memprediksi dengan model
+    	Model yang telah dilatih digunakan untuk memprediksi hasil pada data uji (X_test).
 
-Hal ini berarti :
-1.  `max_depth` sebesar20: Ini menunjukkan bahwa kedalaman maksimum trees in the forest adalah 20 level. Membatasi tree's depth membantu mengurangi overfitting.
+	 	y_test_pred = grid_search.predict(X_test)
 
-2. `min_samples_leaf` sebesar 4: Ini berarti bahwa setiap daun (node akhir dari decision tree, tempat prediksi dilakukan) harus berisi setidaknya empat sampel.
+Didapatkan hasil Hyperparameter tiap model adalah: 
 
-3. `min_samples_split` sebesar 2: Ini menunjukkan bahwa sebuah node harus berisi setidaknya dua sampel agar dapat dibagi (untuk membuat dua child node).
+| Model                  | Hyperparameter Name          | Value              |
+|------------------------|------------------------------|--------------------|
+| K-Nearest Neighbors    | classifier__n_neighbors      | 7                  |
+|                        | classifier__weights          | uniform            |
+| Logistic Regression    | classifier__C               | 10                 |
+|                        | classifier__penalty          | l2                 |
+| Support Vector Machine | classifier__C               | 10                 |
+|                        | classifier__kernel           | rbf                |
+| Random Forest          | classifier__max_depth        | 20                 |
+|                        | classifier__min_samples_leaf | 4                  |
+|                        | classifier__min_samples_split| 10                 |
+|                        | classifier__n_estimators     | 200                |
 
-4. `n_estimators` sebesar 50: Ini adalah jumlah decision trees. Algoritma Random Forest bekerja dengan merata-rata prediksi dari banyak decision trees untuk menghasilkan prediksi akhir, yang membantu mengurangi overfitting dan variansi.
+- **K-Nearest Neighbors (KNN)**:
+	- `classifier__n_neighbors`: 7
+	Ini menunjukkan bahwa model KNN menggunakan 7 tetangga terdekat untuk melakukan klasifikasi. Artinya, ketika memprediksi kelas sebuah data baru, model akan melihat kelas mayoritas dari 7 tetangga terdekat.
+
+	- `classifier__weights`: 'uniform'
+	Mengindikasikan bahwa setiap tetangga memiliki bobot yang sama (tidak ada perbedaan berdasarkan jarak). Jadi, kontribusi semua tetangga dihitung secara merata.
+
+- **Logistic Regression** :
+	- `classifier__C`: 10
+	Parameter C mengontrol regularisasi model. Nilai yang lebih tinggi (10 dalam kasus ini) mengurangi regularisasi, sehingga model lebih kompleks dan mungkin lebih cocok untuk dataset dengan pola yang lebih rumit.
+
+	- `classifier__penalty`: 'l2'
+	Ini menunjukkan bahwa model menggunakan regularisasi L2, yang berfungsi untuk menghindari overfitting dengan menambahkan penalti berdasarkan kuadrat bobot parameter.
+
+- **Support Vector Machine (SVM)**:
+	- `classifier__C`: 10
+	Parameter C mengontrol tingkat regularisasi. Dengan C=10, model lebih fokus pada memaksimalkan margin antar kelas tetapi tetap memperhatikan kesalahan klasifikasi untuk mendukung data yang lebih kompleks.
+
+	- classifier__kernel: 'rbf'
+	Kernel RBF (Radial Basis Function) adalah fungsi non-linear yang cocok untuk dataset dengan pola non-linear. Kernel ini memproyeksikan data ke dimensi yang lebih tinggi untuk membuat data lebih mudah dipisahkan.
+
+- **Random Forest**: 
+	- `max_depth`: 20:
+   	Ini menunjukkan bahwa kedalaman maksimum trees in the forest adalah 20 level. Membatasi tree's depth membantu mengurangi overfitting.
+	- `min_samples_leaf` : 4
+   	Ini berarti bahwa setiap daun (node akhir dari decision tree, tempat prediksi dilakukan) harus berisi setidaknya empat sampel.
+	- `min_samples_split` : 10
+ 	Ini menunjukkan bahwa sebuah node harus berisi setidaknya sepuluh sampel agar dapat dibagi (untuk membuat sepuluh child node).
+	- `n_estimators` : 200
+  	Ini adalah jumlah decision trees. Algoritma Random Forest bekerja dengan merata-rata prediksi dari banyak decision trees untuk menghasilkan prediksi akhir, yang membantu mengurangi overfitting dan variansi.
+
+
+
+
 
 ## Evaluation
-Metrik evaluasi yang digunakan pada project ini adalah `Confusion Matrix`. . Confusion matrix digunakan untuk memvisualisasikan kinerja model. Matriks ini menunjukkan jumlah prediksi _true positive_, _true negative_, _false positive_, dan _false negative_ yang dihasilkan oleh model. Dengan diketahuinya _true positive_, _true negative_, _false positive_, dan _false negative_ ; parameter seperti  _Precision_, _Recall_ dan _F1-Score_ dapat dihitung. 
+Pada pelatihan ini akan dilakukan perhitungan evaluasi dengan menggunakan beberapa metrik.
+
+**Metrik Evaluasi**
+
+- _Confusion Matrix_
+	Metrik evaluasi yang digunakan pada project ini adalah `Confusion Matrix`. . Confusion matrix digunakan untuk memvisualisasikan kinerja model. 
 
 <img width="450" alt="eval-confusion" src="https://github.com/user-attachments/assets/9910a852-8343-4a1e-ab7f-0435e3ebfadd">
 
+Matriks ini menunjukkan jumlah prediksi _true positive_, _true negative_, _false positive_, dan _false negative_ yang dihasilkan oleh model. Dengan diketahuinya _true positive_, _true negative_, _false positive_, dan _false negative_ ; parameter seperti  _Precision_, _Recall_ dan _F1-Score_ dapat dihitung. 
 
 - _Precision_
   Presisi adalah ukuran yang menunjukkan seberapa banyak prediksi true positive yang benar-benar sesuai. Presisi didefinisikan sebagai jumlah true positive (TP) dibagi dengan jumlah total true positive (TP) dan false positive (FP).
@@ -499,43 +544,185 @@ Metrik evaluasi yang digunakan pada project ini adalah `Confusion Matrix`. . Con
 
 	<img width="533" alt="weighted rata-rata berbobot" src="https://github.com/user-attachments/assets/5ea3bf0c-70d6-47ab-9dfb-35284d644197">
 
-Didapatkan hasil seperti : 
+**Perbandingan Metrik**
 
-| Class             | Precision | Recall | F1-Score | Support |
-|-------------------|-----------|--------|----------|---------|
-| 0                 | 0.98      | 0.95   | 0.97     | 17525   |
-| 1                 | 0.63      | 0.82   | 0.71     | 1701    |
-| **Accuracy**      |           |        | 0.94     | 19226   |
-| **Macro avg**     | 0.80      | 0.88   | 0.84     | 19226   |
-| **Weighted avg**  | 0.95      | 0.94   | 0.94     | 19226   |
+| **Metrik**     | **Sisi Positif**                                    | **Sisi Negatif**                               | **Kecocokan Penggunaan**                                                     |
+|----------------|-----------------------------------------------------|------------------------------------------------|-------------------------------------------------------------------------------|
+| **Precision**  | Mengurangi false positive                           | Tidak memperhatikan false negative             | Saat false positive berisiko tinggi .             |
+| **Recall**     | Mengurangi false negative                           | Tidak memperhatikan false positive             | Saat false negative berisiko tinggi .          |
+| **F1-Score**   | Menyeimbangkan precision dan recall                 | Tidak memperhatikan true negative              | Saat dataset tidak seimbang dan precision/recall sama pentingnya.            |
+| **Accuracy**   | Mudah dihitung dan diinterpretasikan                | Menyesatkan untuk dataset tidak seimbang       | Saat dataset seimbang dan semua kelas sama pentingnya.                        |
+| **Support**    | Memberikan informasi distribusi kelas               | Bukan metrik kinerja                           | Untuk memahami distribusi kelas dalam dataset.                                |
 
-![Confusion Matrix for Random forest](https://github.com/user-attachments/assets/2f6aee59-3c08-47c1-8c4c-5bc580b1c488)
+Mengingat kelebihan dan kekurangan parameter _Precision_, _Recall_, _Accuracy F1-Score_, diketahui bahwa evaluasi dengan F1-Score lebih cocok digunakan pada pembahasan ini karena F1-Score cocok untuk data imbalance seperti data yang kita gunakan. 
 
-A | Kelas 0 (Non-diabetes): menunjukkan performa yang sangat baik dengan precision sebesar 0.98, artinya 98% prediksi untuk kelas ini benar. Dengan recall sebesar 0.95, model mampu mengenali 95% dari seluruh data aktual kelas 0, yang menunjukkan tingkat sensitivitas tinggi terhadap data kelas ini. Nilai F1-score sebesar 0.97 mengindikasikan keseimbangan yang kuat antara precision dan recall, dengan dukungan dari 17,525 data aktual di kelas 0.
+F1-score sangat cocok untuk digunakan pada data yang tidak seimbang (imbalanced data) karena F1-score memperhitungkan kedua metrik penting, yaitu _precision_ dan _recall_, yang memberikan gambaran lebih lengkap tentang kinerja model, terutama ketika distribusi kelas tidak merata. _Precision_ mengukur seberapa banyak prediksi positif yang benar, sementara recall mengukur seberapa banyak prediksi positif yang berhasil ditemukan dari total data positif yang ada.
 
-B | Kelas 1 (Diabetes): Untuk kelas minoritas (kelas 1), model mencapai Precision sebesar 0,63, yang menunjukkan bahwa 63% prediksi dengan label 1 adalah benar, meskipun terdapat jumlah false positive yang cukup signifikan. Recall sebesar 0,82 mengindikasikan bahwa model berhasil mengidentifikasi 82% data aktual dengan label 1, sehingga mampu meminimalkan false negative. Dengan F1-Score sebesar 0,71, model menunjukkan keseimbangan yang moderat antara Precision dan Recall, berdasarkan evaluasi terhadap 1.701 sampel aktual pada kelas ini.
 
-Perbedaan kinerja antara kelas-kelas ini kemungkinan disebabkan oleh ketidakseimbangan dalam dataset asli. Kelas 0 (Non-diabetes) adalah kelas mayoritas dan memiliki lebih banyak contoh yang dapat dipelajari oleh model.
+**Langkah-langkah diambil untuk melakukan evaluasi adalah:**
+1. Memprediksi Data Uji
 
-Namun, recall yang lebih tinggi untuk kelas 1 (Diabetes) menjanjikan. Ini adalah aspek penting untuk model kesehatan, karena melewatkan kasus positif yang sebenarnya (_false negatives_) dapat memiliki implikasi serius.
+   		 y_test_pred = grid_search.predict(X_test)
+   
+Model yang telah dilatih digunakan untuk memprediksi label pada data uji (X_test).
+
+2. Menghitung Metrik Evaluasi (_Precision_, _Recall_, _F1-Score_, _Accuracy_)
+
+		precision = precision_score(y_test, y_test_pred, average='weighted')
+		recall = recall_score(y_test, y_test_pred, average='weighted')
+		f1 = f1_score(y_test, y_test_pred, average='weighted')
+		accuracy = accuracy_score(y_test, y_test_pred)
+		support = len(y_test)
+
+   Metrik seperti _precision_, _recall_, _F1-score_, _accuracy_, dan jumlah data uji (_support_) dihitung untuk menilai performa model. 
+
+3. Mencetak Laporan Klasifikasi
+	
+ 		print(classification_report(y_test, y_test_pred, target_names=['Class 0', 'Class 1']))
+
+   Laporan klasifikasi mencakup metrik seperti precision, recall, F1-score, dan support untuk setiap kelas.
+   
+4. Menghitung dan memvisualisasi `Confusion Matrix`
+
+		cm = confusion_matrix(y_test, y_test_pred)
+		sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=['Class 0', 'Class 1'], yticklabels=['Class 0', 'Class 1'])
+
+
+_Confusion Matrix_ dihitung untuk menunjukkan distribusi prediksi model terhadap label sebenarnya.
+     
+5. Menyimpan Hasil Evaluasi
+
+		metrics_results['Model'].append(model_name)
+		metrics_results['Precision'].append(precision)
+		metrics_results['Recall'].append(recall)
+		metrics_results['F1-Score'].append(f1)
+		metrics_results['Accuracy'].append(accuracy)
+		metrics_results['Support'].append(support)
+
+   Hasil evaluasi setiap model disimpan dalam bentuk struktur data untuk memudahkan analisis dan perbandingan.
+   
+6. Menyortir dan Menampilkan Hasil Evaluasi
+
+   		sorted_metrics_df = metrics_df.sort_values(by='F1-Score', ascending=False)
+		print(sorted_metrics_df)
+
+    Hasil evaluasi disusun berdasarkan metrik utama (F1-score) untuk mengidentifikasi model terbaik.
+   
+11. Memvisualisasikan Perbandingan Metrik
+
+    	metrics_df.set_index('Model')[['Precision', 'Recall', 'F1-Score', 'Accuracy']].plot(kind='bar', figsize=(12, 6))
+
+	Visualisasi performa model berdasarkan metrik evaluasi dalam diagram batang.
+
+**Hasil Evaluasi**
+
+1. **K-Nearest Neighbors (KNN)**:
+Hasil _Confusion Matrix_ untuk model KKN adalah :
+
+![KKN-confusion](https://github.com/user-attachments/assets/fe5f6caa-05cc-4300-ad78-15fc5922be14)
+
+Hasil _Classification Report_ untuk Model KKN adalah : 
+
+| Class      | Precision | Recall | F1-Score | Support |
+|------------|-----------|--------|----------|---------|
+| **Class 0** | 0.98      | 0.93   | 0.95     | 17525   |
+| **Class 1** | 0.53      | 0.80   | 0.64     | 1701    |
+| **Accuracy**|           |        | 0.92     | 19226   |
+| **Macro Avg**| 0.75      | 0.86   | 0.80     | 19226   |
+| **Weighted Avg**| 0.94      | 0.92   | 0.93     | 19226   |
+
+Laporan klasifikasi untuk model K-Nearest Neighbors menunjukkan kinerja yang sangat baik pada Kelas 0, dengan precision tinggi (0.98), recall (0.93), dan F1-score (0.95), yang mencerminkan prediksi yang akurat dan andal untuk kelas mayoritas.
+
+Namun, model menghadapi kesulitan dalam memprediksi Kelas 1, dengan precision yang lebih rendah (0.53) dan F1-score (0.64), meskipun recall-nya cukup tinggi (0.80), yang menunjukkan bahwa sebagian besar instance Kelas 1 yang sebenarnya berhasil terdeteksi. 
+
+Akurasi keseluruhan sebesar 92% mencerminkan kinerja umum yang baik, tetapi perbedaan kinerja antar kelas mengindikasikan pengaruh ketidakseimbangan data, di mana Kelas 0, dengan 17.525 instance, jauh lebih dominan dibandingkan Kelas 1 yang hanya memiliki 1.701 instance.
+
+2. **_Random Forest_**:
+Hasil _Confusion Matrix_ untuk model Random Forest adalah :
+
+![RandomForest-CM](https://github.com/user-attachments/assets/6b2b4ac6-7df0-4772-8ff4-dee8bbe82e30)
+
+
+Hasil _Classification Report_ untuk Model Random Forest adalah : 
+
+| Metric         | Precision | Recall | F1-Score | Support |
+|----------------|-----------|--------|----------|---------|
+| Class 0        | 0.98      | 0.96   | 0.97     | 17525   |
+| Class 1        | 0.64      | 0.81   | 0.72     | 1701    |
+| Accuracy       | -         | -      | 0.94     | 19226   |
+| Macro Avg      | 0.81      | 0.88   | 0.84     | 19226   |
+| Weighted Avg   | 0.95      | 0.94   | 0.95     | 19226   |
+
+Model ini menunjukkan kinerja sangat baik untuk Class 0 dengan precision (0.98), recall (0.96), dan F1-score (0.97), namun kurang optimal untuk Class 1, dengan precision (0.64) dan F1-score (0.72) yang lebih rendah meskipun recall tinggi (0.81). Akurasi keseluruhan mencapai 94%, namun rata-rata makro (precision 0.81, recall 0.88, F1-score 0.84) menunjukkan ketidakseimbangan kelas. Rata-rata berbobot yang lebih tinggi (precision 0.95, recall 0.94, F1-score 0.95) mencerminkan dominasi Class 0. 
+
+3. **_Logistic Regression_**:
+Hasil _Confusion Matrix_ untuk model Logistic Regression adalah :
+
+![RandomForest-CM](https://github.com/user-attachments/assets/6b2b4ac6-7df0-4772-8ff4-dee8bbe82e30)
+
+
+Hasil _Classification Report_ untuk _Logistic Regression_ adalah : 
+
+| Metric         | Precision | Recall | F1-Score | Support |
+|----------------|-----------|--------|----------|---------|
+| Class 0        | 0.98      | 0.94   | 0.96     | 17525   |
+| Class 1        | 0.55      | 0.79   | 0.65     | 1701    |
+| Accuracy       | -         | -      | 0.92     | 19226   |
+| Macro Avg      | 0.76      | 0.86   | 0.80     | 19226   |
+| Weighted Avg   | 0.94      | 0.92   | 0.93     | 19226   |
+
+
+Model ini menunjukkan kinerja yang sangat baik untuk Class 0 dengan precision (0.98) dan F1-score (0.96), tetapi kinerjanya kurang optimal untuk Class 1 dengan precision (0.55) dan F1-score (0.65), meskipun recall cukup tinggi (0.79). Akurasi keseluruhan model adalah 92%, dan rata-rata makro (precision 0.76, recall 0.86, F1-score 0.80) menunjukkan ketidakseimbangan antara kedua kelas. Rata-rata berbobot (precision 0.94, recall 0.92, F1-score 0.93) mencerminkan kinerja yang lebih baik pada Class 0. Hal ini menunjukkan bahwa model perlu disesuaikan lebih lanjut untuk meningkatkan prediksi pada kelas minoritas (Class 1).
+
+4. **_Support Vector Machine_**:
+Hasil _Confusion Matrix_ untuk model _Support Vector Machine_ adalah :
+
+![SVM-CF](https://github.com/user-attachments/assets/0ac3ef04-d2bf-4cc5-84d0-f43d53a5f98e)
+
+
+Hasil _Classification Report_ untuk _Support Vector Machine_ adalah : 
+
+| Metric         | Precision | Recall | F1-Score | Support |
+|----------------|-----------|--------|----------|---------|
+| Class 0        | 0.98      | 0.95   | 0.97     | 17525   |
+| Class 1        | 0.62      | 0.80   | 0.70     | 1701    |
+| Accuracy       | -         | -      | 0.94     | 19226   |
+| Macro Avg      | 0.80      | 0.88   | 0.83     | 19226   |
+| Weighted Avg   | 0.95      | 0.94   | 0.94     | 19226   |
+
+Model ini menunjukkan kinerja yang sangat baik untuk Class 0 dengan precision (0.98) dan F1-score (0.97), serta recall yang tinggi (0.95). Namun, untuk Class 1, precision (0.62) dan F1-score (0.70) masih dapat ditingkatkan meskipun recall (0.80) cukup baik. Akurasi keseluruhan model mencapai 94%, dengan rata-rata makro (precision 0.80, recall 0.88, F1-score 0.83) menunjukkan keseimbangan yang lebih baik antara kedua kelas. Rata-rata berbobot (precision 0.95, recall 0.94, F1-score 0.94) menyoroti dominasi kinerja model pada Class 0, yang lebih besar.
+
+**Perbandingan Hasil Perhitungan**
+
+| Rank | Model                  | Precision   | Recall     | F1-Score   | Accuracy   | Support |
+|------|------------------------|-------------|------------|------------|------------|---------|
+| 1    | Random Forest          | 0.951234    | 0.943358   | 0.946281   | 0.943358   | 19226   |
+| 2    | Support Vector Machine | 0.948704    | 0.939717   | 0.943055   | 0.939717   | 19226   |
+| 3    | Logistic Regression    | 0.940615    | 0.923177   | 0.929423   | 0.923177   | 19226   |
+| 4    | K-Nearest Neighbors    | 0.939555    | 0.919120   | 0.926333   | 0.919120   | 19226   |
+
+Jika dibandingkan dengan grafik, maka: 
+
+![rekap-CF](https://github.com/user-attachments/assets/92e393e3-21dd-46ca-98be-e7add468297d)
+
 
 3. Dibutuhkan juga informasi `Feature Importance` baru yang didapatkan setelah perhitungan dengan model.
    
 ![Feature Importance](https://github.com/user-attachments/assets/17ae83b2-557e-498f-befa-f2e633d6bb2e)
 
-* HbA1c_level adalah fitur yang paling penting dengan nilai penting sebesar 0,44. HbA1c adalah ukuran rata-rata kadar glukosa darah selama 2 hingga 3 bulan terakhir, sehingga tidak mengherankan jika ini merupakan prediktor signifikan untuk diabetes.
+* HbA1c_level adalah fitur yang paling penting dengan nilai penting sebesar 0,408. HbA1c adalah ukuran rata-rata kadar glukosa darah selama 2 hingga 3 bulan terakhir, sehingga tidak mengherankan jika ini merupakan prediktor signifikan untuk diabetes.
 
-* Blood_glucose_level adalah fitur kedua yang paling penting dengan nilai penting sebesar 0,32. Hal ini sejalan dengan pengetahuan medis, karena kadar glukosa darah langsung digunakan untuk mendiagnosis diabetes.
+* Blood_glucose_level adalah fitur kedua yang paling penting dengan nilai penting sebesar 0,318. Hal ini sejalan dengan pengetahuan medis, karena kadar glukosa darah langsung digunakan untuk mendiagnosis diabetes.
 
-* Age adalah fitur ketiga yang paling penting dengan nilai penting sebesar 0,14. Sudah diketahui bahwa risiko diabetes tipe 2 meningkat seiring bertambahnya usia.
+* Age adalah fitur ketiga yang paling penting dengan nilai penting sebesar 0,134. Sudah diketahui bahwa risiko diabetes tipe 2 meningkat seiring bertambahnya usia.
 
-* BMI menduduki peringkat keempat dalam hal pentingnya, yaitu sebesar 0,06. Indeks Massa Tubuh (BMI) adalah faktor risiko utama untuk diabetes, dan peranannya telah didokumentasikan dengan baik dalam literatur medis.
+* BMI menduduki peringkat keempat dalam hal pentingnya, yaitu sebesar 0,08. Indeks Massa Tubuh (BMI) adalah faktor risiko utama untuk diabetes, dan peranannya telah didokumentasikan dengan baik dalam literatur medis.
 
 
 ## Conclusion
-Dari evaluasi, **Random Forest** memiliki nilai accuracy yang cukup tinggi yaitu 0.9749. 
+Dari evaluasi, **Random Forest** memiliki nilai F1 Score yang cukup tinggi yaitu 0.946281.
 
-Model mencapai akurasi sekitar 95,1%, dengan precision sebesar 0,98 untuk kelas 0 (non-diabetes) dan 0,69 untuk kelas 1 (diabetes). Model juga mampu mengidentifikasi 96% kasus non-diabetes dengan benar (recall untuk kelas 0) serta 81% kasus diabetes (recall untuk kelas 1). Akurasi yang cukup tinggi dan performa yang seimbang pada kedua kelas menunjukkan bahwa model telah dioptimalkan dengan baik dan cukup robust.
+Dari tabel di atas, model Random Forest menunjukkan kinerja terbaik dengan nilai precision (0.95), recall (0.94), dan F1-score (0.95), diikuti oleh Support Vector Machine dengan skor yang sangat mendekati. Logistic Regression dan K-Nearest Neighbors berada di posisi ketiga dan keempat, masing-masing dengan performa yang sedikit lebih rendah namun tetap menunjukkan hasil yang solid. Secara keseluruhan, semua model memiliki accuracy di atas 92%, dengan Random Forest memberikan hasil terbaik dalam hal keseimbangan antara precision, recall, dan F1-score.
 
 Analisis pentingnya fitur menyoroti bahwa HbA1c_level dan blood_glucose_level merupakan faktor paling penting dalam memprediksi diabetes. Usia (age) dan BMI juga memiliki pengaruh yang signifikan. Namun, beberapa fitur seperti riwayat merokok (smoking history) dan jenis kelamin (gender) memiliki dampak minimal atau bahkan tidak memengaruhi prediksi model.
 
